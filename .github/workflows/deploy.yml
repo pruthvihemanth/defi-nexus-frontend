@@ -13,50 +13,16 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: custom
-          custom_payload: |
-            {
-              "channel": "#defi-nexus-deployments",
-              "username": "DeFi Nexus Bot",
-              "icon_emoji": ":rocket:",
-              "attachments": [
-                {
-                  "color": "#36a64f",
-                  "title": "🚀 DeFi Nexus Frontend Deployment Started",
-                  "fields": [
-                    {
-                      "title": "Branch",
-                      "value": "${{ github.ref_name }}",
-                      "short": true
-                    },
-                    {
-                      "title": "Commit",
-                      "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
-                      "short": true
-                    },
-                    {
-                      "title": "Author",
-                      "value": "${{ github.actor }}",
-                      "short": true
-                    },
-                    {
-                      "title": "Message",
-                      "value": "${{ github.event.head_commit.message }}",
-                      "short": false
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "type": "button",
-                      "text": "View Progress",
-                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                      "style": "primary"
-                    }
-                  ],
-                  "footer": "DeFi Nexus CI/CD",
-                  "ts": ${{ github.event.head_commit.timestamp }}
-                }
-              ]
-            }
+          channel: '#defi-nexus-deployments'
+          text: |
+            🚀 **DeFi Nexus Frontend Deployment Started**
+            
+            **Branch:** `${{ github.ref_name }}`
+            **Commit:** `${{ github.sha }}`
+            **Author:** ${{ github.actor }}
+            **Message:** ${{ github.event.head_commit.message }}
+            
+            **🔍 View Progress:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
@@ -92,3 +58,129 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ap-southeast-2
+
+      - name: Notify Slack - Deployment Success
+        if: success()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: success
+          channel: '#defi-nexus-deployments'
+          custom_payload: |
+            {
+              "channel": "#defi-nexus-deployments",
+              "username": "DeFi Nexus Bot",
+              "icon_emoji": ":white_check_mark:",
+              "attachments": [
+                {
+                  "color": "good",
+                  "title": "✅ DeFi Nexus Frontend Deployed Successfully!",
+                  "fields": [
+                    {
+                      "title": "Branch",
+                      "value": "${{ github.ref_name }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Commit",
+                      "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
+                      "short": true
+                    },
+                    {
+                      "title": "Author",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Duration",
+                      "value": "${{ job.duration }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Live URL",
+                      "value": "<https://defi-nexus.com|🌐 defi-nexus.com>",
+                      "short": true
+                    },
+                    {
+                      "title": "CloudFront",
+                      "value": "<https://dodaddu.cloudfront.net|📊 dodaddu.cloudfront.net>",
+                      "short": true
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "button",
+                      "text": "View Site",
+                      "url": "https://defi-nexus.com",
+                      "style": "primary"
+                    },
+                    {
+                      "type": "button",
+                      "text": "View Commit",
+                      "url": "${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
+                    }
+                  ],
+                  "footer": "DeFi Nexus CI/CD",
+                  "ts": ${{ github.event.head_commit.timestamp }}
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Notify Slack - Deployment Failure
+        if: failure()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: failure
+          channel: '#defi-nexus-deployments'
+          custom_payload: |
+            {
+              "channel": "#defi-nexus-deployments",
+              "username": "DeFi Nexus Bot",
+              "icon_emoji": ":x:",
+              "attachments": [
+                {
+                  "color": "danger",
+                  "title": "❌ DeFi Nexus Frontend Deployment Failed!",
+                  "fields": [
+                    {
+                      "title": "Branch",
+                      "value": "${{ github.ref_name }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Commit",
+                      "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
+                      "short": true
+                    },
+                    {
+                      "title": "Author",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Failed Step",
+                      "value": "${{ job.status }}",
+                      "short": true
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "button",
+                      "text": "View Logs",
+                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                      "style": "danger"
+                    },
+                    {
+                      "type": "button",
+                      "text": "View Commit",
+                      "url": "${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
+                    }
+                  ],
+                  "footer": "DeFi Nexus CI/CD",
+                  "ts": ${{ github.event.head_commit.timestamp }}
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
