@@ -174,6 +174,12 @@ jobs:
         run: |
           echo "❌ Sending deployment failure notification to Slack..."
           
+          # Get the failed step name from the workflow run
+          FAILED_STEP="Unknown"
+          if [ "${{ job.status }}" = "failure" ]; then
+            FAILED_STEP="Test Failure Scenario (Temporary)"
+          fi
+          
           curl -X POST -H 'Content-type: application/json' \
             --data '{
               "channel": "#defi-nexus-deployments",
@@ -201,8 +207,13 @@ jobs:
                     },
                     {
                       "title": "Failed Step",
-                      "value": "${{ job.status }}",
+                      "value": "'"$FAILED_STEP"'",
                       "short": true
+                    },
+                    {
+                      "title": "Failure Reason",
+                      "value": "🧪 *Test Failure Scenario* - Intentional failure to test notification system. This is a temporary test and will be reverted.",
+                      "short": false
                     }
                   ],
                   "actions": [
