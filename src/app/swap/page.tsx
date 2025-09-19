@@ -71,7 +71,7 @@ export default function SwapPage() {
               </span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Trade tokens instantly with the best rates across multiple DEXs on Solana
+              Execute seamless token swaps with optimal pricing across Solana's leading decentralized exchanges
             </p>
           </div>
 
