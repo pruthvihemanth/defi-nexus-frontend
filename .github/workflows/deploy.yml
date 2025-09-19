@@ -1,4 +1,4 @@
-name: Deploy to AWS S3 and CloudFront
+name: Deploy DeFi Nexus to AWS
 
 on:
   push:
@@ -15,6 +15,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Debug - List files
+        run: |
+          echo "=== Repository contents ==="
+          ls -la
+          echo "=== Package files ==="
+          ls -la package.json pnpm-lock.yaml || echo "Package files not found"
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -23,35 +30,48 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: latest
+          version: 8
 
-      - name: Get pnpm store directory
-        shell: bash
+      - name: Debug - Check pnpm
         run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          echo "=== pnpm version ==="
+          pnpm --version
+          echo "=== Node version ==="
+          node --version
+          echo "=== npm version ==="
+          npm --version
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: |
+          echo "=== Installing dependencies ==="
+          pnpm install --frozen-lockfile
+          echo "=== Dependencies installed successfully ==="
+
+      - name: Debug - Check installed packages
+        run: |
+          echo "=== Installed packages ==="
+          pnpm list --depth=0
 
       - name: Build Next.js application
-        run: pnpm build
-        env:
-          NODE_ENV: production
-
-      - name: Verify build output
         run: |
-          echo "Build output contents:"
-          ls -la out/
-          echo "Checking if index.html exists:"
-          test -f out/index.html && echo "✅ index.html found" || echo "❌ index.html missing"
+          echo "=== Building application ==="
+          pnpm build
+          echo "=== Build completed ==="
+
+      - name: Debug - Verify build output
+        run: |
+          echo "=== Build output contents ==="
+          ls -la out/ || echo "out/ directory not found"
+          echo "=== Checking for index.html ==="
+          if [ -f "out/index.html" ]; then
+            echo "✅ index.html found"
+            echo "=== index.html size ==="
+            ls -lh out/index.html
+          else
+            echo "❌ index.html missing"
+            echo "=== Available files in out/ ==="
+            find out/ -type f -name "*.html" || echo "No HTML files found"
+          fi
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -60,29 +80,46 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Debug - Test AWS connection
+        run: |
+          echo "=== Testing AWS connection ==="
+          aws sts get-caller-identity
+          echo "=== AWS connection successful ==="
+
       - name: Deploy to S3
         run: |
-          echo "Deploying to S3 bucket: ${{ secrets.S3_BUCKET }}"
+          echo "=== Deploying to S3 ==="
+          echo "Bucket: ${{ secrets.S3_BUCKET }}"
+          echo "Region: ${{ env.AWS_REGION }}"
+          
+          # Check if bucket exists and is accessible
+          aws s3 ls s3://${{ secrets.S3_BUCKET }} || echo "Bucket listing failed"
+          
+          # Deploy static assets
           aws s3 sync out/ s3://${{ secrets.S3_BUCKET }} \
             --delete \
             --cache-control "public, max-age=31536000, immutable" \
             --exclude "*.html" \
             --exclude "*.json"
           
-          # Upload HTML and JSON files with no-cache headers
+          # Deploy HTML and JSON files
           aws s3 sync out/ s3://${{ secrets.S3_BUCKET }} \
             --cache-control "public, max-age=0, must-revalidate" \
             --include "*.html" \
             --include "*.json"
+          
+          echo "=== S3 deployment completed ==="
 
       - name: Invalidate CloudFront
         run: |
-          echo "Invalidating CloudFront distribution: ${{ secrets.DISTRIBUTION_ID }}"
+          echo "=== Invalidating CloudFront ==="
+          echo "Distribution ID: ${{ secrets.DISTRIBUTION_ID }}"
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.DISTRIBUTION_ID }} \
             --paths "/*"
+          echo "=== CloudFront invalidation completed ==="
 
       - name: Deployment success
         run: |
           echo "🎉 Deployment completed successfully!"
-          echo "Your site should be available at your domain shortly."
+          echo "Your DeFi Nexus site should be available at your domain shortly."
