@@ -10,21 +10,58 @@ jobs:
     
     steps:
       - name: Notify Slack - Deployment Started
-        uses: 8398a7/action-slack@v3
-        with:
-          status: custom
-          channel: '#defi-nexus-deployments'
-          text: |
-            🚀 **DeFi Nexus Frontend Deployment Started**
-            
-            **Branch:** `${{ github.ref_name }}`
-            **Commit:** `${{ github.sha }}`
-            **Author:** ${{ github.actor }}
-            **Message:** ${{ github.event.head_commit.message }}
-            
-            **🔍 View Progress:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          echo "🚀 Sending deployment start notification to Slack..."
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Author: ${{ github.actor }}"
+          
+          curl -X POST -H 'Content-type: application/json' \
+            --data '{
+              "channel": "#defi-nexus-deployments",
+              "username": "DeFi Nexus Bot",
+              "icon_emoji": ":rocket:",
+              "text": "🚀 *DeFi Nexus Frontend Deployment Started*",
+              "attachments": [
+                {
+                  "color": "good",
+                  "fields": [
+                    {
+                      "title": "Branch",
+                      "value": "${{ github.ref_name }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Commit",
+                      "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
+                      "short": true
+                    },
+                    {
+                      "title": "Author",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Message",
+                      "value": "${{ github.event.head_commit.message }}",
+                      "short": false
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "button",
+                      "text": "View Progress",
+                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                      "style": "primary"
+                    }
+                  ],
+                  "footer": "DeFi Nexus CI/CD"
+                }
+              ]
+            }' \
+            ${{ secrets.SLACK_WEBHOOK_URL }} \
+            && echo "✅ Start notification sent successfully!" \
+            || echo "❌ Failed to send start notification"
 
       - name: Checkout
         uses: actions/checkout@v4
