@@ -80,12 +80,6 @@ jobs:
       - name: Build
         run: pnpm build --no-lint
 
-      - name: Test Failure Scenario (Temporary)
-        run: |
-          echo "🧪 Testing failure notifications..."
-          echo "This step will intentionally fail to test failure notifications"
-          exit 1
-
       - name: Upload to S3
         run: |
           aws s3 sync out/ s3://${{ secrets.S3_BUCKET }} --delete
@@ -177,7 +171,7 @@ jobs:
           # Get the failed step name from the workflow run
           FAILED_STEP="Unknown"
           if [ "${{ job.status }}" = "failure" ]; then
-            FAILED_STEP="Test Failure Scenario (Temporary)"
+            FAILED_STEP="Deployment Step Failed"
           fi
           
           curl -X POST -H 'Content-type: application/json' \
@@ -212,7 +206,7 @@ jobs:
                     },
                     {
                       "title": "Failure Reason",
-                      "value": "🧪 *Test Failure Scenario* - Intentional failure to test notification system. This is a temporary test and will be reverted.",
+                      "value": "⚠️ *Deployment Error* - Check the logs for detailed error information. Click 'View Logs' button below for full details.",
                       "short": false
                     }
                   ],
