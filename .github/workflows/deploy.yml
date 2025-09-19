@@ -9,6 +9,57 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Notify Slack - Deployment Started
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "#defi-nexus-deployments",
+              "username": "DeFi Nexus Bot",
+              "icon_emoji": ":rocket:",
+              "attachments": [
+                {
+                  "color": "#36a64f",
+                  "title": "🚀 DeFi Nexus Frontend Deployment Started",
+                  "fields": [
+                    {
+                      "title": "Branch",
+                      "value": "${{ github.ref_name }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Commit",
+                      "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
+                      "short": true
+                    },
+                    {
+                      "title": "Author",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Message",
+                      "value": "${{ github.event.head_commit.message }}",
+                      "short": false
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "button",
+                      "text": "View Progress",
+                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                      "style": "primary"
+                    }
+                  ],
+                  "footer": "DeFi Nexus CI/CD",
+                  "ts": ${{ github.event.head_commit.timestamp }}
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
       - name: Checkout
         uses: actions/checkout@v4
 
