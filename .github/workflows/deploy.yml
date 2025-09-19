@@ -80,6 +80,12 @@ jobs:
       - name: Build
         run: pnpm build --no-lint
 
+      - name: Test Failure Scenario (Temporary)
+        run: |
+          echo "🧪 Testing failure notifications..."
+          echo "This step will intentionally fail to test failure notifications"
+          exit 1
+
       - name: Upload to S3
         run: |
           aws s3 sync out/ s3://${{ secrets.S3_BUCKET }} --delete
