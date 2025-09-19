@@ -2,7 +2,7 @@ name: Slack Deployment Notifications
 
 on:
   workflow_run:
-    workflows: ["Deploy to AWS"]
+    workflows: ["Deploy DeFi Nexus"]
     types: [completed]
 
 jobs:
