@@ -58,6 +58,7 @@ interface Project {
   liquidity: string
   volume24h: string
   change24h: string
+  contractAddress?: string
   socials: {
     twitter: string
     telegram: string

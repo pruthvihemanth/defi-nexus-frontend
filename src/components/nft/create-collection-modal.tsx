@@ -31,7 +31,8 @@ import {
   AlertTriangle,
   Sparkles,
   Crown,
-  Zap
+  Zap,
+  Plus
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 

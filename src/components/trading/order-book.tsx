@@ -26,7 +26,7 @@ const generateOrderBookData = (marketPrice: number) => {
   for (let i = 0; i < 10; i++) {
     const price = marketPrice * (1 - (i + 1) * 0.001)
     const size = Math.random() * 100 + 10
-    const total = i === 0 ? size : bids[i - 1].total + size
+    const total: number = i === 0 ? size : bids[i - 1].total + size
     
     bids.push({
       price: parseFloat(price.toFixed(2)),
@@ -39,7 +39,7 @@ const generateOrderBookData = (marketPrice: number) => {
   for (let i = 0; i < 10; i++) {
     const price = marketPrice * (1 + (i + 1) * 0.001)
     const size = Math.random() * 100 + 10
-    const total = i === 0 ? size : asks[i - 1].total + size
+    const total: number = i === 0 ? size : asks[i - 1].total + size
     
     asks.push({
       price: parseFloat(price.toFixed(2)),

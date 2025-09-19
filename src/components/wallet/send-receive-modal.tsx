@@ -135,7 +135,7 @@ export function SendReceiveModal({ isOpen, onClose, type, onTransactionComplete 
 
         <div className="space-y-6">
           {/* Tab Selection */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "send" | "receive")} className="w-full">
             <TabsList className="grid w-full grid-cols-2 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border-0 shadow-lg">
               <TabsTrigger 
                 value="send" 

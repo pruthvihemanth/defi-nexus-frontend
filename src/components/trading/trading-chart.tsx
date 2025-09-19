@@ -58,7 +58,7 @@ const generateMockData = (timeframe: string, symbol: string) => {
     
     const high = basePrice * (1 + Math.random() * 0.01)
     const low = basePrice * (1 - Math.random() * 0.01)
-    const open = i === points ? basePrice : data[data.length - 1]?.close || basePrice
+    const open: number = i === points ? basePrice : data[data.length - 1]?.close || basePrice
     const close = basePrice
     
     data.push({
