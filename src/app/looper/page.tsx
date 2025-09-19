@@ -24,7 +24,7 @@ import {
   Zap,
   Play,
   Pause,
-  Stop,
+  Square,
   Plus,
   Eye,
   EyeOff,
