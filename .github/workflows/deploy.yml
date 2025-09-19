@@ -98,19 +98,18 @@ jobs:
 
       - name: Notify Slack - Deployment Success
         if: success()
-        uses: 8398a7/action-slack@v3
-        with:
-          status: success
-          channel: '#defi-nexus-deployments'
-          custom_payload: |
-            {
+        run: |
+          echo "✅ Sending deployment success notification to Slack..."
+          
+          curl -X POST -H 'Content-type: application/json' \
+            --data '{
               "channel": "#defi-nexus-deployments",
               "username": "DeFi Nexus Bot",
               "icon_emoji": ":white_check_mark:",
+              "text": "✅ *DeFi Nexus Frontend Deployed Successfully!*",
               "attachments": [
                 {
                   "color": "good",
-                  "title": "✅ DeFi Nexus Frontend Deployed Successfully!",
                   "fields": [
                     {
                       "title": "Branch",
@@ -156,29 +155,28 @@ jobs:
                       "url": "${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
                     }
                   ],
-                  "footer": "DeFi Nexus CI/CD",
-                  "ts": ${{ github.event.head_commit.timestamp }}
+                  "footer": "DeFi Nexus CI/CD"
                 }
               ]
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+            }' \
+            ${{ secrets.SLACK_WEBHOOK_URL }} \
+            && echo "✅ Success notification sent successfully!" \
+            || echo "❌ Failed to send success notification"
 
       - name: Notify Slack - Deployment Failure
         if: failure()
-        uses: 8398a7/action-slack@v3
-        with:
-          status: failure
-          channel: '#defi-nexus-deployments'
-          custom_payload: |
-            {
+        run: |
+          echo "❌ Sending deployment failure notification to Slack..."
+          
+          curl -X POST -H 'Content-type: application/json' \
+            --data '{
               "channel": "#defi-nexus-deployments",
               "username": "DeFi Nexus Bot",
               "icon_emoji": ":x:",
+              "text": "❌ *DeFi Nexus Frontend Deployment Failed!*",
               "attachments": [
                 {
                   "color": "danger",
-                  "title": "❌ DeFi Nexus Frontend Deployment Failed!",
                   "fields": [
                     {
                       "title": "Branch",
@@ -214,10 +212,10 @@ jobs:
                       "url": "${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
                     }
                   ],
-                  "footer": "DeFi Nexus CI/CD",
-                  "ts": ${{ github.event.head_commit.timestamp }}
+                  "footer": "DeFi Nexus CI/CD"
                 }
               ]
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+            }' \
+            ${{ secrets.SLACK_WEBHOOK_URL }} \
+            && echo "✅ Failure notification sent successfully!" \
+            || echo "❌ Failed to send failure notification"
