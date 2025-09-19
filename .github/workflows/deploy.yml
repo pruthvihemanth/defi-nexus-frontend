@@ -1,125 +1,43 @@
-name: Deploy DeFi Nexus to AWS
+name: Deploy DeFi Nexus
 
 on:
   push:
     branches: [ main ]
-
-env:
-  AWS_REGION: ap-southeast-2
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Debug - List files
-        run: |
-          echo "=== Repository contents ==="
-          ls -la
-          echo "=== Package files ==="
-          ls -la package.json pnpm-lock.yaml || echo "Package files not found"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 8
-
-      - name: Debug - Check pnpm
-        run: |
-          echo "=== pnpm version ==="
-          pnpm --version
-          echo "=== Node version ==="
-          node --version
-          echo "=== npm version ==="
-          npm --version
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       - name: Install dependencies
-        run: |
-          echo "=== Installing dependencies ==="
-          pnpm install --frozen-lockfile
-          echo "=== Dependencies installed successfully ==="
+        run: pnpm install
 
-      - name: Debug - Check installed packages
-        run: |
-          echo "=== Installed packages ==="
-          pnpm list --depth=0
+      - name: Build
+        run: pnpm build
 
-      - name: Build Next.js application
+      - name: Upload to S3
         run: |
-          echo "=== Building application ==="
-          pnpm build
-          echo "=== Build completed ==="
-
-      - name: Debug - Verify build output
-        run: |
-          echo "=== Build output contents ==="
-          ls -la out/ || echo "out/ directory not found"
-          echo "=== Checking for index.html ==="
-          if [ -f "out/index.html" ]; then
-            echo "✅ index.html found"
-            echo "=== index.html size ==="
-            ls -lh out/index.html
-          else
-            echo "❌ index.html missing"
-            echo "=== Available files in out/ ==="
-            find out/ -type f -name "*.html" || echo "No HTML files found"
-          fi
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Debug - Test AWS connection
-        run: |
-          echo "=== Testing AWS connection ==="
-          aws sts get-caller-identity
-          echo "=== AWS connection successful ==="
-
-      - name: Deploy to S3
-        run: |
-          echo "=== Deploying to S3 ==="
-          echo "Bucket: ${{ secrets.S3_BUCKET }}"
-          echo "Region: ${{ env.AWS_REGION }}"
-          
-          # Check if bucket exists and is accessible
-          aws s3 ls s3://${{ secrets.S3_BUCKET }} || echo "Bucket listing failed"
-          
-          # Deploy static assets
-          aws s3 sync out/ s3://${{ secrets.S3_BUCKET }} \
-            --delete \
-            --cache-control "public, max-age=31536000, immutable" \
-            --exclude "*.html" \
-            --exclude "*.json"
-          
-          # Deploy HTML and JSON files
-          aws s3 sync out/ s3://${{ secrets.S3_BUCKET }} \
-            --cache-control "public, max-age=0, must-revalidate" \
-            --include "*.html" \
-            --include "*.json"
-          
-          echo "=== S3 deployment completed ==="
+          aws s3 sync out/ s3://${{ secrets.S3_BUCKET }} --delete
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-southeast-2
 
       - name: Invalidate CloudFront
         run: |
-          echo "=== Invalidating CloudFront ==="
-          echo "Distribution ID: ${{ secrets.DISTRIBUTION_ID }}"
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.DISTRIBUTION_ID }} \
-            --paths "/*"
-          echo "=== CloudFront invalidation completed ==="
-
-      - name: Deployment success
-        run: |
-          echo "🎉 Deployment completed successfully!"
-          echo "Your DeFi Nexus site should be available at your domain shortly."
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths "/*"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-southeast-2
