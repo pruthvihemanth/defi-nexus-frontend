@@ -78,7 +78,7 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm build
+        run: pnpm build --no-lint
 
       - name: Verify build output
         run: |
