@@ -133,8 +133,8 @@ export default function HomePage() {
             </h1>
             
             <p className="text-xl lg:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-              Professional-grade decentralized finance infrastructure for institutional and retail users. 
-              Advanced trading, lending, and yield optimization on Solana's high-performance blockchain.
+              Trade, earn, and manage your crypto assets with ease and security. 
+              Experience the future of decentralized finance on Solana.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
