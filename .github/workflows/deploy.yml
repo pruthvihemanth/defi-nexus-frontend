@@ -17,48 +17,48 @@ jobs:
           echo "Author: ${{ github.actor }}"
           
           curl -X POST -H 'Content-type: application/json' \
-            --data '{
-              "channel": "#defi-nexus-deployments",
-              "username": "DeFi Nexus Bot",
-              "icon_emoji": ":rocket:",
-              "text": "🚀 *DeFi Nexus Frontend Deployment Started*",
-              "attachments": [
+            --data "{
+              \"channel\": \"#defi-nexus-deployments\",
+              \"username\": \"DeFi Nexus Bot\",
+              \"icon_emoji\": \":rocket:\",
+              \"text\": \"🚀 *DeFi Nexus Frontend Deployment Started*\",
+              \"attachments\": [
                 {
-                  "color": "good",
-                  "fields": [
+                  \"color\": \"good\",
+                  \"fields\": [
                     {
-                      "title": "Branch",
-                      "value": "${{ github.ref_name }}",
-                      "short": true
+                      \"title\": \"Branch\",
+                      \"value\": \"${{ github.ref_name }}\",
+                      \"short\": true
                     },
                     {
-                      "title": "Commit",
-                      "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
-                      "short": true
+                      \"title\": \"Commit\",
+                      \"value\": \"<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\",
+                      \"short\": true
                     },
                     {
-                      "title": "Author",
-                      "value": "${{ github.actor }}",
-                      "short": true
+                      \"title\": \"Author\",
+                      \"value\": \"${{ github.actor }}\",
+                      \"short\": true
                     },
                     {
-                      "title": "Message",
-                      "value": "${{ github.event.head_commit.message }}",
-                      "short": false
+                      \"title\": \"Message\",
+                      \"value\": \"${{ github.event.head_commit.message }}\",
+                      \"short\": false
                     }
                   ],
-                  "actions": [
+                  \"actions\": [
                     {
-                      "type": "button",
-                      "text": "View Progress",
-                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                      "style": "primary"
+                      \"type\": \"button\",
+                      \"text\": \"View Progress\",
+                      \"url\": \"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\",
+                      \"style\": \"primary\"
                     }
                   ],
-                  "footer": "DeFi Nexus CI/CD"
+                  \"footer\": \"DeFi Nexus CI/CD\"
                 }
               ]
-            }' \
+            }" \
             ${{ secrets.SLACK_WEBHOOK_URL }} \
             && echo "✅ Start notification sent successfully!" \
             || echo "❌ Failed to send start notification"
@@ -102,63 +102,63 @@ jobs:
           echo "✅ Sending deployment success notification to Slack..."
           
           curl -X POST -H 'Content-type: application/json' \
-            --data '{
-              "channel": "#defi-nexus-deployments",
-              "username": "DeFi Nexus Bot",
-              "icon_emoji": ":white_check_mark:",
-              "text": "✅ *DeFi Nexus Frontend Deployed Successfully!*",
-              "attachments": [
+            --data "{
+              \"channel\": \"#defi-nexus-deployments\",
+              \"username\": \"DeFi Nexus Bot\",
+              \"icon_emoji\": \":white_check_mark:\",
+              \"text\": \"✅ *DeFi Nexus Frontend Deployed Successfully!*\",
+              \"attachments\": [
                 {
-                  "color": "good",
-                  "fields": [
+                  \"color\": \"good\",
+                  \"fields\": [
                     {
-                      "title": "Branch",
-                      "value": "${{ github.ref_name }}",
-                      "short": true
+                      \"title\": \"Branch\",
+                      \"value\": \"${{ github.ref_name }}\",
+                      \"short\": true
                     },
                     {
-                      "title": "Commit",
-                      "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
-                      "short": true
+                      \"title\": \"Commit\",
+                      \"value\": \"<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\",
+                      \"short\": true
                     },
                     {
-                      "title": "Author",
-                      "value": "${{ github.actor }}",
-                      "short": true
+                      \"title\": \"Author\",
+                      \"value\": \"${{ github.actor }}\",
+                      \"short\": true
                     },
                     {
-                      "title": "Duration",
-                      "value": "${{ job.duration }}",
-                      "short": true
+                      \"title\": \"Duration\",
+                      \"value\": \"${{ job.duration }}\",
+                      \"short\": true
                     },
                     {
-                      "title": "Live URL",
-                      "value": "<https://defi-nexus.com|🌐 defi-nexus.com>",
-                      "short": true
+                      \"title\": \"Live URL\",
+                      \"value\": \"<https://defi-nexus.com|🌐 defi-nexus.com>\",
+                      \"short\": true
                     },
                     {
-                      "title": "CloudFront",
-                      "value": "<https://dodaddu.cloudfront.net|📊 dodaddu.cloudfront.net>",
-                      "short": true
+                      \"title\": \"CloudFront\",
+                      \"value\": \"<https://dodaddu.cloudfront.net|📊 dodaddu.cloudfront.net>\",
+                      \"short\": true
                     }
                   ],
-                  "actions": [
+                  \"actions\": [
                     {
-                      "type": "button",
-                      "text": "View Site",
-                      "url": "https://defi-nexus.com",
-                      "style": "primary"
+                      \"type\": \"button\",
+                      \"text\": \"View Site\",
+                      \"url\": \"https://defi-nexus.com\",
+                      \"style\": \"primary\"
                     },
                     {
-                      "type": "button",
-                      "text": "View Commit",
-                      "url": "${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
+                      \"type\": \"button\",
+                      \"text\": \"View Commit\",
+                      \"url\": \"${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}\"
                     }
                   ],
-                  "footer": "DeFi Nexus CI/CD"
+                  \"footer\": \"DeFi Nexus CI/CD\"
                 }
               ]
-            }' \
+            }" \
             ${{ secrets.SLACK_WEBHOOK_URL }} \
             && echo "✅ Success notification sent successfully!" \
             || echo "❌ Failed to send success notification"
@@ -175,58 +175,58 @@ jobs:
           fi
           
           curl -X POST -H 'Content-type: application/json' \
-            --data '{
-              "channel": "#defi-nexus-deployments",
-              "username": "DeFi Nexus Bot",
-              "icon_emoji": ":x:",
-              "text": "❌ *DeFi Nexus Frontend Deployment Failed!*",
-              "attachments": [
+            --data "{
+              \"channel\": \"#defi-nexus-deployments\",
+              \"username\": \"DeFi Nexus Bot\",
+              \"icon_emoji\": \":x:\",
+              \"text\": \"❌ *DeFi Nexus Frontend Deployment Failed!*\",
+              \"attachments\": [
                 {
-                  "color": "danger",
-                  "fields": [
+                  \"color\": \"danger\",
+                  \"fields\": [
                     {
-                      "title": "Branch",
-                      "value": "${{ github.ref_name }}",
-                      "short": true
+                      \"title\": \"Branch\",
+                      \"value\": \"${{ github.ref_name }}\",
+                      \"short\": true
                     },
                     {
-                      "title": "Commit",
-                      "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
-                      "short": true
+                      \"title\": \"Commit\",
+                      \"value\": \"<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\",
+                      \"short\": true
                     },
                     {
-                      "title": "Author",
-                      "value": "${{ github.actor }}",
-                      "short": true
+                      \"title\": \"Author\",
+                      \"value\": \"${{ github.actor }}\",
+                      \"short\": true
                     },
                     {
-                      "title": "Failed Step",
-                      "value": "'"$FAILED_STEP"'",
-                      "short": true
+                      \"title\": \"Failed Step\",
+                      \"value\": \"$FAILED_STEP\",
+                      \"short\": true
                     },
                     {
-                      "title": "Failure Reason",
-                      "value": "⚠️ *Deployment Error* - Check the logs for detailed error information. Click 'View Logs' button below for full details.",
-                      "short": false
+                      \"title\": \"Failure Reason\",
+                      \"value\": \"⚠️ *Deployment Error* - Check the logs for detailed error information. Click 'View Logs' button below for full details.\",
+                      \"short\": false
                     }
                   ],
-                  "actions": [
+                  \"actions\": [
                     {
-                      "type": "button",
-                      "text": "View Logs",
-                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                      "style": "danger"
+                      \"type\": \"button\",
+                      \"text\": \"View Logs\",
+                      \"url\": \"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\",
+                      \"style\": \"danger\"
                     },
                     {
-                      "type": "button",
-                      "text": "View Commit",
-                      "url": "${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
+                      \"type\": \"button\",
+                      \"text\": \"View Commit\",
+                      \"url\": \"${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}\"
                     }
                   ],
-                  "footer": "DeFi Nexus CI/CD"
+                  \"footer\": \"DeFi Nexus CI/CD\"
                 }
               ]
-            }' \
+            }" \
             ${{ secrets.SLACK_WEBHOOK_URL }} \
             && echo "✅ Failure notification sent successfully!" \
             || echo "❌ Failed to send failure notification"
