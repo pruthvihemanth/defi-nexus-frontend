@@ -78,7 +78,15 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm build --no-lint
+        run: pnpm build
+
+      - name: Verify build output
+        run: |
+          if [ ! -d "out" ]; then
+            echo "❌ Build output directory 'out' not found!"
+            exit 1
+          fi
+          echo "✅ Build output verified - $(ls -la out/ | wc -l) files found"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -89,7 +97,9 @@ jobs:
 
       - name: Upload to S3
         run: |
+          echo "📦 Uploading to S3 bucket: ${{ secrets.S3_BUCKET }}"
           aws s3 sync out/ s3://${{ secrets.S3_BUCKET }} --delete
+          echo "✅ S3 upload completed successfully"
 
       - name: Invalidate CloudFront
         run: |
