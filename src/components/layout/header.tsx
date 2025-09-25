@@ -23,9 +23,12 @@ export function Header() {
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center space-x-3 group">
-                <div className="relative h-9 w-9 rounded-xl bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 border border-blue-500/20">
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 to-transparent"></div>
-                  <span className="relative text-white font-black text-lg tracking-tight drop-shadow-sm">D</span>
+                <div className="relative h-9 w-9 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                  <img 
+                    src="/dnx-logo-64.svg" 
+                    alt="DNX Logo" 
+                    className="w-full h-full rounded-xl"
+                  />
                 </div>
                 <span className="text-xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-slate-900 bg-clip-text text-transparent group-hover:from-blue-600 group-hover:to-purple-700 transition-all duration-300">
                   DeFi Nexus

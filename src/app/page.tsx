@@ -207,6 +207,69 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* DNX Token Section */}
+      <section className="py-20 lg:py-32">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+              Introducing <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">DNX Token</span>
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              The native utility token powering the DeFi Nexus ecosystem with governance, staking, and exclusive benefits.
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-0 shadow-2xl bg-gradient-to-br from-blue-50 to-purple-50 dark:from-slate-800 dark:to-slate-900">
+              <CardContent className="p-8 lg:p-12">
+                <div className="flex flex-col lg:flex-row items-center gap-8">
+                  <div className="flex-shrink-0">
+                    <img 
+                      src="/dnx-logo-256.png" 
+                      alt="DNX Token Logo" 
+                      className="w-32 h-32 rounded-2xl shadow-lg"
+                    />
+                  </div>
+                  <div className="flex-1 text-center lg:text-left">
+                    <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
+                      <h3 className="text-3xl font-bold">DNX Token</h3>
+                      <Badge variant="secondary" className="text-sm">DeFi Nexus</Badge>
+                    </div>
+                    <p className="text-lg text-muted-foreground mb-6">
+                      Total Supply: <span className="font-semibold text-foreground">1,000,000,000 DNX</span>
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                      <div className="text-center p-4 bg-white/50 dark:bg-slate-700/50 rounded-lg">
+                        <div className="text-2xl font-bold text-blue-600">Governance</div>
+                        <div className="text-sm text-muted-foreground">Vote on proposals</div>
+                      </div>
+                      <div className="text-center p-4 bg-white/50 dark:bg-slate-700/50 rounded-lg">
+                        <div className="text-2xl font-bold text-purple-600">Staking</div>
+                        <div className="text-sm text-muted-foreground">Earn rewards</div>
+                      </div>
+                      <div className="text-center p-4 bg-white/50 dark:bg-slate-700/50 rounded-lg">
+                        <div className="text-2xl font-bold text-green-600">Utility</div>
+                        <div className="text-sm text-muted-foreground">Fee discounts</div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <Button size="lg" variant="gradient" className="flex-1">
+                        <Coins className="h-5 w-5 mr-2" />
+                        Learn More
+                      </Button>
+                      <Button size="lg" variant="outline" className="flex-1">
+                        <Activity className="h-5 w-5 mr-2" />
+                        View Tokenomics
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Benefits Section */}
       <section className="py-20 lg:py-32 bg-white/50 dark:bg-slate-800/50">
         <div className="container mx-auto px-4">
