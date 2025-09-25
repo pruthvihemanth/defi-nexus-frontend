@@ -225,7 +225,7 @@ export default function HomePage() {
                 <div className="flex flex-col lg:flex-row items-center gap-8">
                   <div className="flex-shrink-0">
                     <img 
-                      src="/dnx-logo-256.png" 
+                      src="/dnx-logo-new.svg" 
                       alt="DNX Token Logo" 
                       className="w-32 h-32 rounded-2xl shadow-lg"
                     />

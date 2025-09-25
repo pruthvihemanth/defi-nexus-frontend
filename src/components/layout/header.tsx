@@ -25,7 +25,7 @@ export function Header() {
               <Link href="/" className="flex items-center space-x-3 group">
                 <div className="relative h-9 w-9 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
                   <img 
-                    src="/dnx-logo-64.svg" 
+                    src="/dnx-logo-new-64.svg" 
                     alt="DNX Logo" 
                     className="w-full h-full rounded-xl"
                   />
