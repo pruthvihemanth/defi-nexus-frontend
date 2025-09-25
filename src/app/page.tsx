@@ -212,7 +212,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-              Introducing <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">DNX Token</span>
+              Introducing <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">DEFI-NEXUS Token</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               The native utility token powering the DeFi Nexus ecosystem with governance, staking, and exclusive benefits.
@@ -225,18 +225,18 @@ export default function HomePage() {
                 <div className="flex flex-col lg:flex-row items-center gap-8">
                   <div className="flex-shrink-0">
                     <img 
-                      src="/dnx-logo-new.svg" 
-                      alt="DNX Token Logo" 
+                      src="/defi-nexus-logo.svg" 
+                      alt="DEFI-NEXUS Token Logo" 
                       className="w-32 h-32 rounded-2xl shadow-lg"
                     />
                   </div>
                   <div className="flex-1 text-center lg:text-left">
                     <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
-                      <h3 className="text-3xl font-bold">DNX Token</h3>
+                      <h3 className="text-3xl font-bold">DEFI-NEXUS Token</h3>
                       <Badge variant="secondary" className="text-sm">DeFi Nexus</Badge>
                     </div>
                     <p className="text-lg text-muted-foreground mb-6">
-                      Total Supply: <span className="font-semibold text-foreground">1,000,000,000 DNX</span>
+                      Total Supply: <span className="font-semibold text-foreground">1,000,000,000 DEFI-NEXUS</span>
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                       <div className="text-center p-4 bg-white/50 dark:bg-slate-700/50 rounded-lg">
