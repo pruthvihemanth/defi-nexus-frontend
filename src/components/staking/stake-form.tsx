@@ -268,3 +268,6 @@ export function StakeForm({ pool, showValues }: StakeFormProps) {
 
 
 
+
+
+
