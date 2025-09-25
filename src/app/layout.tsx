@@ -19,11 +19,11 @@ export const metadata: Metadata = {
   description: "Trade, earn, and manage your crypto assets with ease and security on Solana. Swap tokens, provide liquidity, stake, and more.",
   icons: {
     icon: [
-      { url: '/favicon.svg?v=5', type: 'image/svg+xml', sizes: 'any' },
-      { url: '/icon.svg?v=5', type: 'image/svg+xml', sizes: 'any' }
+      { url: '/defi-nexus-logo-minimal.svg?v=6', type: 'image/svg+xml', sizes: 'any' },
+      { url: '/defi-nexus-logo-64.svg?v=6', type: 'image/svg+xml', sizes: 'any' }
     ],
-    apple: { url: '/favicon.svg?v=5', type: 'image/svg+xml' },
-    shortcut: { url: '/favicon.svg?v=5' }
+    apple: { url: '/defi-nexus-logo-minimal.svg?v=6', type: 'image/svg+xml' },
+    shortcut: { url: '/defi-nexus-logo-minimal.svg?v=6' }
   }
 };
 

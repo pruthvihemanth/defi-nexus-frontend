@@ -126,6 +126,17 @@ export default function HomePage() {
               <span className="text-sm font-medium">The Ultimate DeFi Platform on Solana</span>
             </div>
             
+            {/* Logo */}
+            <div className="flex justify-center mb-8">
+              <div className="relative h-24 w-24 rounded-2xl shadow-2xl">
+                <img 
+                  src="/defi-nexus-logo.svg" 
+                  alt="DeFi Nexus Logo" 
+                  className="w-full h-full rounded-2xl"
+                />
+              </div>
+            </div>
+            
             <h1 className="text-5xl lg:text-7xl font-bold mb-6">
               <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                 DeFi Nexus

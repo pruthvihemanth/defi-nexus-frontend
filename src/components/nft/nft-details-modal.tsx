@@ -449,3 +449,4 @@ export function NFTDetailsModal({ nft, open, onOpenChange }: NFTDetailsModalProp
 
 
 
+

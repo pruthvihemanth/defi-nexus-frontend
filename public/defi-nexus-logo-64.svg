@@ -1,36 +1,56 @@
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EC4899;stop-opacity:1" />
     </linearGradient>
-    <linearGradient id="innerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#60A5FA;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#A78BFA;stop-opacity:1" />
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E40AF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7C3AED;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06B6D4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3B82F6;stop-opacity:1" />
     </linearGradient>
     <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#3B82F6" flood-opacity="0.3"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.12"/>
+    </filter>
+    <filter id="textShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000000" flood-opacity="0.1"/>
     </filter>
   </defs>
   
   <!-- Background Circle -->
-  <circle cx="32" cy="32" r="28" fill="url(#mainGradient)" opacity="0.1"/>
+  <circle cx="32" cy="32" r="30" fill="url(#primaryGradient)" opacity="0.06"/>
   
-  <!-- Main Circle -->
-  <circle cx="32" cy="32" r="24" fill="url(#mainGradient)" filter="url(#shadow)"/>
+  <!-- Main Hexagon -->
+  <polygon points="32,6 48,18 48,34 32,46 16,34 16,18" 
+           fill="url(#primaryGradient)" 
+           stroke="url(#accentGradient)" 
+           stroke-width="2"
+           filter="url(#shadow)"/>
   
-  <!-- Inner Circle -->
-  <circle cx="32" cy="32" r="18" fill="url(#innerGradient)" opacity="0.9"/>
+  <!-- Inner Hexagon -->
+  <polygon points="32,14 40,20 40,28 32,34 24,28 24,20" 
+           fill="url(#accentGradient)" 
+           opacity="0.25"/>
   
-  <!-- Letter D -->
-  <text x="32" y="40" 
-        font-family="system-ui, -apple-system, sans-serif" 
-        font-size="28" 
-        font-weight="800" 
-        text-anchor="middle" 
-        fill="white" 
-        opacity="0.95">D</text>
+  <!-- Central Hub Circle -->
+  <circle cx="32" cy="24" r="4" fill="url(#primaryGradient)"/>
   
-  <!-- Subtle border -->
-  <circle cx="32" cy="32" r="24" fill="none" stroke="white" stroke-width="1" opacity="0.2"/>
+  <!-- Connection Lines -->
+  <line x1="32" y1="24" x2="27" y2="28" stroke="url(#accentGradient)" stroke-width="1.5" opacity="0.7"/>
+  <line x1="32" y1="24" x2="37" y2="28" stroke="url(#accentGradient)" stroke-width="1.5" opacity="0.7"/>
+  <line x1="27" y1="28" x2="37" y2="28" stroke="url(#accentGradient)" stroke-width="1" opacity="0.5"/>
+  
+  <!-- Connection Dots -->
+  <circle cx="27" cy="28" r="2" fill="url(#accentGradient)" opacity="0.8"/>
+  <circle cx="37" cy="28" r="2" fill="url(#accentGradient)" opacity="0.8"/>
+  
+  <!-- DeFi Text -->
+  <text x="32" y="50" text-anchor="middle" font-family="'Inter', 'Segoe UI', Arial, sans-serif" font-size="7" font-weight="700" letter-spacing="0.3px" fill="url(#textGradient)" filter="url(#textShadow)">DeFi</text>
+  
+  <!-- Nexus Text -->
+  <text x="32" y="58" text-anchor="middle" font-family="'Inter', 'Segoe UI', Arial, sans-serif" font-size="5" font-weight="600" letter-spacing="0.8px" fill="url(#primaryGradient)" filter="url(#textShadow)">NEXUS</text>
 </svg>
